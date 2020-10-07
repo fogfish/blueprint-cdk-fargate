@@ -1,0 +1,35 @@
+name: checks
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    ## Just to ensure that deployment to AWS account is originated from trusted sources.  
+    if:  github.actor == 'fogfish'
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install
+        run: npm install
+
+      - name: tsc
+        run: npm run tsc
+
+      - name: test
+        run: npm run test
+
+      - name: aws access
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+  
+      - name: deploy
+        run: npm run -- cdk deploy
