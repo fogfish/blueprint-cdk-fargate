@@ -6,7 +6,7 @@ A minimal example of AWS Fargate with AWS CDK and GitHub actions.
 
 * Spawns AWS Fargate [cluster](src/cluster.ts) on your AWS account
 * Builds a simple [http echo service](docker/echo.go) with Golang
-* Automates blueprint delivery with GitHub Actions [pipeline](.github/workflows/check.yml) 
+* Automates blueprint delivery with GitHub Actions [pipeline](.github/workflows/check.yaml) 
 
 ## Getting started
 
